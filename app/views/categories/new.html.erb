@@ -1,0 +1,16 @@
+<%= render 'shared/form_error', error_object: @category %>
+<div class='row'>
+  <div class='col-xs-12'>
+    <h1>Create a new category</h1>
+  </div>
+</div>
+<div class='row'>
+  <div class='col-xs-4'>
+    <%= form_for [@user, @category] do |f| %>
+      <div class="form-group">
+        <%= f.label :name, 'Category Name' %>
+        <%= f.text_field :name, class: 'form-control', placeholder: 'Category Name' %>
+      </div>
+      <%= f.submit 'Submit', class: 'btn btn-success' %>
+    <% end %>
+  </div>

@@ -1,0 +1,39 @@
+<% @user.categories.each do |category| %>
+  <% count = 1 %>
+  <% monthly_total = 0.00 %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class='panel-title'><%= category.name %></h3>
+    </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Expense</th>
+            <th>Amount</th>
+            <th>Frequency</th>
+            <th>Monthly Budget</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @user.expenses.where(category_id: category).each do |expense| %>
+            <tr>
+              <th scope="row"><%= count %></th>
+              <td><%= expense.name %></td>
+              <td>$<%= expense.amount %></td>
+              <td><%= expense.frequency.name %></td>
+              <% monthly_expense = (expense.amount * expense.frequency.value / 12) %>
+              <% monthly_total += monthly_expense %>
+              <td>$<%= "#{(expense.amount * expense.frequency.value / 12).round}" %></td>
+              <td><%= link_to 'edit', edit_user_expense_path(@user, expense) %></td>
+              <td><%= link_to 'delete', user_expense_path(@user, expense), method: :delete %></td>
+            </tr>
+            <% count += 1 %>
+          <% end %>
+        </tbody>
+      </table>
+      <div class="panel-footer">Monthly Total: $<%= monthly_total.round %> </div>
+  </div>
+<% end %>

@@ -1,0 +1,18 @@
+<%= render 'shared/form_error', error_object: @user %>
+<h1>Edit Categories</h1>
+<p>A category must be empty to be deleted</p>
+<%= form_for @user, url: user_edit_categories_path, method: 'patch' do |f| %>
+  <%= f.fields_for :categories do |categories_form| %>
+    <div class='form-inline form-group' >
+      <div class='form-group'>
+        <%= categories_form.text_field :name, class: 'form-control' %>
+      </div>
+      <% if categories_form.object.expenses.empty? %>
+        <div class='checkbox'>
+          <%= categories_form.check_box :_destroy %> Delete
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+  <%= f.submit 'Update Categories', class: 'btn btn-success' %>
+<% end %>
